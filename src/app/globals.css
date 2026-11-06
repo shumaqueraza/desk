@@ -295,25 +295,23 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 10mm;
+    margin: 12mm;
   }
-  .print-sheet,
-  .print-sheet * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  .print-sheet {
-    max-width: none !important;
-    width: 100% !important;
-    padding: 0 !important;
-    border: 0 !important;
-  }
+  html,
   body {
     background: #fff !important;
   }
-  /* The sheet is built in rem units; scale the root down in print so twelve
-     register lines and twelve ledger lines stay on a single A4 page. */
-  html {
-    font-size: 12px;
+  .print-sheet {
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .print-sheet * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

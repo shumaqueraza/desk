@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Printer } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { getPlayerDetail } from "@/lib/queries";
 import { MarkBadge, ReadyStamp } from "@/components/shared/stamp";
@@ -83,6 +83,7 @@ export default async function PlayerDetailPage({
               rel="noopener noreferrer"
               className={secondaryBtn}
             >
+              <Printer className="size-4.5" aria-hidden />
               Print report card
             </a>
           </div>
