@@ -1,0 +1,292 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Play Ready palette — the day ledger (application) */
+  --color-field: #e8ecdd;
+  --color-chalk: #fafaf4;
+  --color-ink: #1d251c;
+  --color-ink-2: #4e5a4a;
+  --color-ink-3: #636e5c;
+  --color-line: #c7cfb8;
+  --color-line-2: #9dab92;
+  --color-green-deep: #173d2b;
+  --color-green: #1f5c3d;
+  --color-green-2: #2a7350;
+  --color-green-tint: #dce6d2;
+  --color-green-tint-2: #ebf1e4;
+  --color-red: #a83722;
+  --color-red-tint: #f3e0da;
+
+  /* Night Register palette — public brand (landing, login) */
+  --color-pitch: #0a0f0a;
+  --color-pitch-2: #10180f;
+  --color-pitch-line: #26382b;
+  --color-bone: #eceee0;
+  --color-bone-2: #9fae9a;
+  --color-volt: #c8ef4c;
+  --color-volt-deep: #a3c833;
+
+  /* Font tokens */
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-atkinson);
+  --font-data: var(--font-jetbrains);
+
+  /* shadcn mapping */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  /* One soft radius scale for the whole product: nothing sharp, anywhere. */
+  --radius: 1rem;
+  --background: #e8ecdd;
+  --foreground: #1d251c;
+  --card: #fafaf4;
+  --card-foreground: #1d251c;
+  --popover: #fafaf4;
+  --popover-foreground: #1d251c;
+  --primary: #1f5c3d;
+  --primary-foreground: #fafaf4;
+  --secondary: #dce6d2;
+  --secondary-foreground: #1d251c;
+  --muted: #ebf1e4;
+  --muted-foreground: #4e5a4a;
+  --accent: #dce6d2;
+  --accent-foreground: #1d251c;
+  --destructive: #b23a26;
+  --border: #c7cfb8;
+  --input: #9dab92;
+  --ring: #1f5c3d;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-size: 17px;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-field text-ink font-body antialiased;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: #dce6d2;
+    color: #173d2b;
+  }
+  :focus-visible {
+    outline: 3px solid #1f5c3d;
+    outline-offset: 2px;
+  }
+  th {
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  /* Status stamp: a small pill, straight and legible. Never decorative. */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 0.36rem 0.72rem;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .stamp-green {
+    color: #1f5c3d;
+    background: #eaf1e5;
+  }
+  .stamp-red {
+    color: #a2321f;
+    background: #f6e8e4;
+  }
+  .stamp-flat {
+    /* kept for compatibility — stamps no longer rotate */
+  }
+  .stamp-ink {
+    color: #4e5a4a;
+    background: #eef0e8;
+  }
+
+  /* Jersey plate: player identity */
+  .jersey {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    flex-shrink: 0;
+    font-family: var(--font-jetbrains), monospace;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: #173d2b;
+    color: #fafaf4;
+    border-radius: 0.75rem;
+  }
+  .jersey-outline {
+    background: transparent;
+    color: #4e5a4a;
+    border: 1.5px solid #9dab92;
+  }
+
+  /* Register rule: one hairline with a volt tick — the ledger's seam */
+  .rule-double {
+    position: relative;
+    height: 1px;
+    background: #c7cfb8;
+  }
+  .rule-double::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 3rem;
+    height: 3px;
+    border-radius: 999px;
+    background: #a3c833;
+  }
+
+  /* Scoreboard numeral */
+  .score-numeral {
+    font-family: var(--font-jetbrains), monospace;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-display {
+    font-family: var(--font-archivo), system-ui, sans-serif;
+  }
+  .font-body {
+    font-family: var(--font-atkinson), system-ui, sans-serif;
+  }
+  .font-data {
+    font-family: var(--font-jetbrains), monospace;
+  }
+
+  .display-wide {
+    font-family: var(--font-archivo), system-ui, sans-serif;
+    font-stretch: 118%;
+  }
+
+  /* ---- Night Register (public brand) ---- */
+
+  /* Poster setting: Archivo pushed to its widest cut, heavy, tight. */
+  .display-poster {
+    font-family: var(--font-archivo), system-ui, sans-serif;
+    font-stretch: 125%;
+    font-weight: 860;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    line-height: 0.96;
+  }
+
+  /* Micro scoreboard label */
+  .micro-label {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Fine grain texture over the pitch canvas */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+  }
+
+  /* Focus on dark surfaces */
+  .pitch-surface :focus-visible {
+    outline: 3px solid #c8ef4c;
+    outline-offset: 3px;
+  }
+  .pitch-surface ::selection {
+    background: #c8ef4c;
+    color: #0a0f0a;
+  }
+  .pitch-surface ::-webkit-scrollbar-track {
+    background: #0a0f0a;
+  }
+  .pitch-surface ::-webkit-scrollbar-thumb {
+    background: #26382b;
+    border-color: #0a0f0a;
+  }
+  .pitch-surface * {
+    scrollbar-color: #26382b #0a0f0a;
+  }
+  .pitch-surface {
+    background: #0a0f0a;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Subtle scrollbars that belong to the palette */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9dab92 #e8ecdd;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #e8ecdd;
+}
+::-webkit-scrollbar-thumb {
+  background: #9dab92;
+  border-radius: 5px;
+  border: 2px solid #e8ecdd;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
