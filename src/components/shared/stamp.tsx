@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { Check, Lock, X } from "lucide-react";
 
 export type StampTone = "green" | "red" | "ink";
 
@@ -23,7 +23,7 @@ export function SessionStatusStamp({ status }: { status: "open" | "locked" }) {
     <Stamp tone="ink">Open</Stamp>
   ) : (
     <Stamp tone="red">
-      <X className="size-3.5" strokeWidth={3} aria-hidden />
+      <Lock className="size-3.5" strokeWidth={2.5} aria-hidden />
       Locked
     </Stamp>
   );
