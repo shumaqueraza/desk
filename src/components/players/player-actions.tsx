@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Power, KeyRound, CircleAlert, Loader2 } from "lucide-react";
+import { Power, KeyRound, CircleAlert, Loader2, Trash2 } from "lucide-react";
 import { secondaryBtn, dangerBtn } from "@/components/shared/form-styles";
 import { appConfig } from "@/config/app.config";
 
@@ -15,7 +15,7 @@ export function PlayerActions({
   isActive: boolean;
 }) {
   const router = useRouter();
-  const [busy, setBusy] = useState<"status" | "password" | null>(null);
+  const [busy, setBusy] = useState<"status" | "password" | "delete" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -74,6 +74,33 @@ export function PlayerActions({
     }
   }
 
+  async function deletePlayer() {
+    if (
+      !window.confirm(
+        "Permanently delete this player, their register marks, match scores and login? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    setBusy("delete");
+    setError(null);
+    setNotice(null);
+    try {
+      const res = await fetch(`/api/players/${playerId}`, { method: "DELETE" });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Could not delete the player.");
+      } else {
+        router.push("/players");
+        router.refresh();
+      }
+    } catch {
+      setError("Could not reach the desk. Try again.");
+    } finally {
+      setBusy(null);
+    }
+  }
+
   return (
     <div className="space-y-3">
       {(error || notice) && (
@@ -108,6 +135,14 @@ export function PlayerActions({
             <KeyRound className="size-4.5" aria-hidden />
           )}
           Reset password
+        </button>
+        <button type="button" onClick={deletePlayer} disabled={busy !== null} className={dangerBtn}>
+          {busy === "delete" ? (
+            <Loader2 className="size-4.5 animate-spin" aria-hidden />
+          ) : (
+            <Trash2 className="size-4.5" aria-hidden />
+          )}
+          Delete player
         </button>
       </div>
     </div>

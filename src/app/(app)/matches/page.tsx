@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { RecordMatchButton } from "@/components/matches/record-match-button";
 import { Trophy } from "lucide-react";
-import { formatDateShort } from "@/lib/dates";
+import { formatDateCompact, formatDateShort } from "@/lib/dates";
 
 export const metadata = { title: "Matches" };
 export const dynamic = "force-dynamic";
@@ -82,16 +82,19 @@ export default async function MatchesPage() {
             <li key={m.id}>
               <a
                 href={`/matches/${m.id}`}
-                className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 sm:px-6 py-4 hover:bg-green-tint-2/60 transition-colors"
+                className="flex items-center gap-x-4 px-4 sm:px-6 py-4 hover:bg-green-tint-2/60 transition-colors"
               >
-                <span className="rounded-full bg-green-tint-2 px-3 py-1.5 font-data text-[0.8rem] font-semibold text-green-deep shrink-0 whitespace-nowrap tabular-nums">
+                <span className="hidden sm:inline-flex items-center rounded-full bg-green-tint-2 px-3 py-1.5 font-data text-[0.8rem] font-semibold text-green-deep shrink-0 whitespace-nowrap tabular-nums">
                   {formatDateShort(m.date).replace(/, /, " · ")}
                 </span>
-                <span className="flex-1 min-w-[160px]">
+                <span className="flex-1 min-w-0">
+                  <span className="block font-data text-[0.7rem] tracking-wide text-ink-3 sm:hidden">
+                    {formatDateCompact(m.date)}
+                  </span>
                   <span className="block font-bold text-[1rem] truncate">vs {m.opponent}</span>
                   <span className="block text-[0.84rem] text-ink-3">{m.sport}</span>
                 </span>
-                <span className="font-data text-[0.85rem] text-ink-2 shrink-0 w-[5.5rem] text-right">
+                <span className="hidden sm:block font-data text-[0.85rem] text-ink-2 shrink-0 w-[5.5rem] text-right">
                   {m.players} player{m.players === 1 ? "" : "s"}
                 </span>
                 <span className="shrink-0 text-right w-[4.5rem]">

@@ -1,10 +1,13 @@
 /** Date helpers. Sessions and matches store dates as YYYY-MM-DD strings. */
 
 export function todayStr(): string {
-  const now = new Date();
-  // Asia/Kolkata regardless of server timezone.
-  const kolkata = new Date(now.getTime() + (5.5 * 60 + now.getTimezoneOffset()) * 60000);
-  return kolkata.toISOString().slice(0, 10);
+  // IST date (YYYY-MM-DD) in every environment — server, local dev, any browser TZ.
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
 }
 
 export function isValidDateStr(d: string): boolean {

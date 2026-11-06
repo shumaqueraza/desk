@@ -6,6 +6,7 @@ import { getSessionDetail } from "@/lib/queries";
 import { PageHeader } from "@/components/shared/page-header";
 import { SessionStatusStamp, MarkBadge } from "@/components/shared/stamp";
 import { AttendanceSheet } from "@/components/sessions/attendance-sheet";
+import { DeleteSessionButton } from "@/components/sessions/delete-session-button";
 import { formatDateLong } from "@/lib/dates";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,7 @@ export default async function SessionDetailPage({
         }
       >
         <SessionStatusStamp status={session.status} />
+        <DeleteSessionButton sessionId={session.id} />
       </PageHeader>
 
       {session.status === "open" ? (

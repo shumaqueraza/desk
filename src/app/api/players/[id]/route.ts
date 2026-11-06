@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/db";
-import { Player } from "@/lib/models";
+import { Attendance, Performance, Player, User } from "@/lib/models";
 import { requireApiUser, isResponse } from "@/lib/auth";
 import { parseBody, ok, fail, serverError } from "@/lib/api";
 import { playerUpdateSchema } from "@/lib/validators";
@@ -46,6 +46,28 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     if (!player) return fail("No such player.", 404);
 
     return ok({ id: player.id });
+  } catch (e) {
+    return serverError(e);
+  }
+}
+
+/** Delete a player and everything that belongs to them. Coach only. */
+export async function DELETE(_request: NextRequest, { params }: Params) {
+  try {
+    const auth = await requireApiUser(["coach"]);
+    if (isResponse(auth)) return auth;
+    const { id } = await params;
+
+    await connectDB();
+    const player = await Player.findById(id);
+    if (!player) return fail("No such player.", 404);
+
+    await Attendance.deleteMany({ playerId: id });
+    await Performance.deleteMany({ playerId: id });
+    await User.deleteMany({ playerId: id });
+    await Player.findByIdAndDelete(id);
+
+    return ok({ id });
   } catch (e) {
     return serverError(e);
   }

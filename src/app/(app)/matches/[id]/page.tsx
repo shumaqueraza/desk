@@ -5,6 +5,7 @@ import { requireUser } from "@/lib/auth";
 import { getMatchDetail } from "@/lib/queries";
 import { PageHeader } from "@/components/shared/page-header";
 import { ScoreSheet } from "@/components/matches/score-sheet";
+import { DeleteMatchButton } from "@/components/matches/delete-match-button";
 import { formatDateLong } from "@/lib/dates";
 
 export const dynamic = "force-dynamic";
@@ -69,7 +70,9 @@ export default async function MatchDetailPage({
         kicker={`${match.sport.toUpperCase()} MATCH`}
         title={`vs ${match.opponent}`}
         sub={formatDateLong(match.date)}
-      />
+      >
+        <DeleteMatchButton matchId={match.id} opponent={match.opponent} />
+      </PageHeader>
       {/* The count and total live inside ScoreSheet now — computed live on the client. */}
       <ScoreSheet matchId={match.id} lines={lines} eligible={eligible} />
     </div>

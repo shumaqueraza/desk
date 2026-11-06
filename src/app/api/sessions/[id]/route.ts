@@ -62,3 +62,23 @@ export async function PUT(request: NextRequest, { params }: Params) {
     return serverError(e);
   }
 }
+
+/** Delete a register and its attendance marks — locked or not. Coach only. */
+export async function DELETE(_request: NextRequest, { params }: Params) {
+  try {
+    const auth = await requireApiUser(["coach"]);
+    if (isResponse(auth)) return auth;
+    const { id } = await params;
+
+    await connectDB();
+    const session = await Session.findById(id);
+    if (!session) return fail("No such practice session.", 404);
+
+    await Attendance.deleteMany({ sessionId: id });
+    await Session.findByIdAndDelete(id);
+
+    return ok({ id });
+  } catch (e) {
+    return serverError(e);
+  }
+}
