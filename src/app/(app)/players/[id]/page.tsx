@@ -7,6 +7,7 @@ import { MarkBadge, ReadyStamp } from "@/components/shared/stamp";
 import { AttendanceRuler, PercentReadout } from "@/components/shared/attendance-ruler";
 import { PlayerActions } from "@/components/players/player-actions";
 import { EditPlayerButton } from "@/components/players/edit-player-button";
+import { secondaryBtn } from "@/components/shared/form-styles";
 import { formatDateShort } from "@/lib/dates";
 import { readinessGap } from "@/lib/readiness";
 
@@ -30,6 +31,7 @@ export default async function PlayerDetailPage({
   if (user.role === "scout" && !detail.stats.isReady) notFound();
 
   const isCoach = user.role === "coach";
+  const canPrintCard = user.role === "coach" || user.role === "scout";
   const { stats, attendance, matches } = detail;
   const gaps = readinessGap(stats);
   const totalScore = matches.reduce((s, m) => s + m.score, 0);
@@ -68,8 +70,22 @@ export default async function PlayerDetailPage({
             <ReadyStamp ready={stats.isReady} />
           </p>
         </div>
-        {isCoach && (
-          <EditPlayerButton player={{ id: detail.id, name: detail.name, age: detail.age, sport: detail.sport }} />
+        {canPrintCard && (
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            {isCoach && (
+              <EditPlayerButton
+                player={{ id: detail.id, name: detail.name, age: detail.age, sport: detail.sport }}
+              />
+            )}
+            <a
+              href={`/players/${detail.id}/card`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={secondaryBtn}
+            >
+              Print report card
+            </a>
+          </div>
         )}
       </div>
 
