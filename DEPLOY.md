@@ -48,7 +48,7 @@ run the production build.
    This is required — Vercel servers do not have fixed IPs.
 4. **Database → Connect → Drivers** → copy the `mongodb+srv://...` string,
    replace `<password>` with your real password, and put your database name
-   before the `?` (e.g. `...mongodb.net/academydesk?retryWrites=true...`).
+   before the `?` (e.g. `...mongodb.net/playready?retryWrites=true...`).
 5. Paste that finished string into `.env` (local) and keep it for step 4 (Vercel).
 
 ---

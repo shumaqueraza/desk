@@ -1,7 +1,8 @@
 {
-  "name": "nextjs_tailwind_shadcn_ts",
-  "version": "0.2.1",
+  "name": "play-ready",
+  "version": "1.0.0",
   "private": true,
+  "description": "The register for one sports academy in Dumka — who came to practice, who scored, who is ready for trials.",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",

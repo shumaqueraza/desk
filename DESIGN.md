@@ -1,4 +1,4 @@
-# Academy Desk design system
+# Play Ready design system
 
 **Direction: The Ground Register.**
 

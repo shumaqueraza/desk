@@ -48,7 +48,7 @@ export const appConfig = {
 
   /** Signed cookie sessions */
   auth: {
-    cookieName: "academydesk_session",
+    cookieName: "playready_session",
     /** Seconds until sign-in expires: 7 days. */
     sessionDurationSec: 60 * 60 * 24 * 7,
     /** Failed login attempts before a temporary lockout. */

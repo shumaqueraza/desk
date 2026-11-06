@@ -1,5 +1,5 @@
 /**
- * Development seed for Academy Desk.
+ * Development seed for Play Ready.
  *
  * Creates one demo academy in MongoDB Atlas:
  * a coach, a scout, eight players with logins, two squads with a season of
