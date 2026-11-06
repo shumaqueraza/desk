@@ -55,25 +55,25 @@ export default async function PlayerReportCardPage({
       </div>
 
       <article className="print-sheet bg-chalk text-ink mx-auto w-full max-w-[210mm] border border-line shadow-xl sm:rounded-2xl">
-        {/* Header band */}
-        <header className="bg-pitch text-bone px-7 py-5 flex items-start justify-between gap-6">
+        {/* Header */}
+        <header className="px-7 py-6 flex items-start justify-between gap-6 border-b border-line">
           <div className="min-w-0">
-            <p className="font-data text-[0.68rem] tracking-[0.14em] text-volt">
+            <p className="font-data text-[0.68rem] tracking-[0.14em] text-green-deep">
               PLAY READY · PLAYER REPORT CARD
             </p>
-            <h1 className="font-display font-extrabold text-[1.7rem] leading-tight mt-1">
+            <h1 className="font-display font-extrabold text-[1.85rem] leading-tight mt-2">
               {detail.name}
             </h1>
-            <p className="text-[0.85rem] text-bone/80 mt-1">
+            <p className="text-[0.88rem] text-ink-2 mt-2">
               {detail.sport} · Age {detail.age} ·{" "}
               {stats.isReady ? (
-                <span className="font-bold text-volt">Ready</span>
+                <span className="font-bold text-green-deep">Ready</span>
               ) : (
-                <span className="font-bold text-red-tint">Not ready</span>
+                <span className="font-bold text-red">Not ready</span>
               )}
             </p>
           </div>
-          <span className="jersey">{detail.jerseyNumber}</span>
+          <span className="jersey jersey-outline">{detail.jerseyNumber}</span>
         </header>
 
         {/* Not-ready line */}
@@ -131,13 +131,13 @@ export default async function PlayerReportCardPage({
             <ul className="divide-y divide-line">
               {recentMatches.map((m) => (
                 <li key={m.id} className="px-7 py-2.5 flex items-center gap-4">
-                  <span className="font-data text-[0.8rem] text-ink-2 w-[7.5rem] shrink-0 tabular-nums">
+                  <span className="font-data text-[0.8rem] leading-tight text-ink-2 w-[7.5rem] shrink-0 tabular-nums">
                     {formatDateShort(m.date)}
                   </span>
-                  <span className="font-bold text-[0.92rem] flex-1 min-w-0 truncate">
+                  <span className="font-bold text-[0.92rem] leading-tight flex-1 min-w-0 truncate">
                     vs {m.opponent}
                   </span>
-                  <span className="score-numeral text-[1.15rem] text-ink tabular-nums">
+                  <span className="score-numeral text-[1.15rem] leading-none text-ink tabular-nums">
                     {m.score}
                   </span>
                 </li>
